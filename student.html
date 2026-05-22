@@ -1,0 +1,849 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瀛︾敓绔?- 璇峰亣鐢宠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
+            color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 20px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info span {
+            font-size: 14px;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #2c5aa0;
+            color: #2c5aa0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            background: #f0f5ff;
+        }
+        
+        .tab.active {
+            background: #2c5aa0;
+            color: white;
+        }
+        
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .content-card h2 {
+            color: #2c5aa0;
+            margin-bottom: 20px;
+            font-size: 18px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+        
+        .form-group input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group small {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .upload-area:hover {
+            border-color: #2c5aa0;
+            background: #f9fafc;
+        }
+        
+        .upload-area i {
+            font-size: 40px;
+            color: #ccc;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .upload-area p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .upload-area input {
+            display: none;
+        }
+        
+        .file-preview {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-preview span {
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .file-preview button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #2c5aa0;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e4080;
+        }
+        
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+        
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffcda1;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        table th {
+            background: #f5f5f5;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        table tr:hover {
+            background: #f9fafc;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .leave-type-badge {
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            background: #e0e0e0;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .modal-header h3 {
+            color: #2c5aa0;
+        }
+        
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .detail-row {
+            margin-bottom: 15px;
+        }
+        
+        .detail-row label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .detail-row p {
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .empty-state i {
+            font-size: 50px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>鐝骇璇峰亣绠＄悊绯荤粺 - 瀛︾敓绔?/h1>
+            <div class="user-info">
+                <span id="userName">鍔犺浇涓?..</span>
+                <button class="logout-btn" onclick="logout()">閫€鍑虹櫥褰?/button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="apply">璇峰亣鐢宠</div>
+            <div class="tab" data-tab="records">鎴戠殑璇峰亣璁板綍</div>
+        </div>
+        
+        <div class="alert alert-error" id="errorMsg"></div>
+        <div class="alert alert-success" id="successMsg"></div>
+        <div class="alert alert-warning" id="warningMsg"></div>
+        
+        <div id="applyTab" class="content-card">
+            <h2>鎻愪氦璇峰亣鐢宠</h2>
+            <form id="leaveForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>濮撳悕</label>
+                        <input type="text" id="name" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>鐝骇</label>
+                        <input type="text" id="className" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>瀛﹀彿</label>
+                        <input type="text" id="studentNo" disabled>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>璇峰亣绫诲瀷 <span style="color: red;">*</span></label>
+                        <select id="leaveType" required onchange="handleLeaveTypeChange()">
+                            <option value="">璇烽€夋嫨</option>
+                            <option value="鐥呭亣">鐥呭亣</option>
+                            <option value="浜嬪亣">浜嬪亣</option>
+                            <option value="鍏亣">鍏亣</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>寮€濮嬫椂闂?<span style="color: red;">*</span></label>
+                        <input type="datetime-local" id="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>缁撴潫鏃堕棿 <span style="color: red;">*</span></label>
+                        <input type="datetime-local" id="endTime" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>璇峰亣浜嬬敱 <span style="color: red;">*</span> <small>(闄?00瀛?</small></label>
+                    <textarea id="reason" maxlength="200" required placeholder="璇疯缁嗘弿杩拌鍋囧師鍥?.."></textarea>
+                </div>
+                
+                <div id="attachmentSection" class="form-group hidden">
+                    <label>闄勪欢璇佹槑 <span style="color: red;">*</span></label>
+                    <small style="display: block; margin-bottom: 10px; color: #ff6600;">
+                        鐥呭亣闇€闄勪笂鐩稿叧璇佹槑锛堝鐥呭巻銆佽瘖鏂功绛夛級
+                    </small>
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <i>馃搸</i>
+                        <p>鐐瑰嚮涓婁紶闄勪欢锛堟敮鎸乯pg銆乸ng銆乸df锛屾渶澶?MB锛?/p>
+                        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
+                    </div>
+                    <div id="filePreview" class="file-preview hidden">
+                        <span id="fileName"></span>
+                        <button type="button" onclick="removeFile()">鍒犻櫎</button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">鎻愪氦鐢宠</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="recordsTab" class="content-card hidden">
+            <h2>鎴戠殑璇峰亣璁板綍</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>鎻愪氦鏃堕棿</th>
+                            <th>璇峰亣绫诲瀷</th>
+                            <th>寮€濮嬫椂闂?/th>
+                            <th>缁撴潫鏃堕棿</th>
+                            <th>鐘舵€?/th>
+                            <th>鎿嶄綔</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recordsTable">
+                    </tbody>
+                </table>
+            </div>
+            <div id="emptyRecords" class="empty-state hidden">
+                <i>馃摥</i>
+                <p>鏆傛棤璇峰亣璁板綍</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>璇峰亣璇︽儏</h3>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalBody">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = '/api';
+        let currentUser = null;
+        let uploadedFilePath = null;
+        
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user') || 'null');
+            
+            if (!token || !user || user.role !== 'student') {
+                window.location.href = 'index.html';
+                return false;
+            }
+            
+            currentUser = user;
+            document.getElementById('userName').textContent = `${user.name} (${user.student_no})`;
+            
+            return true;
+        }
+        
+        async function loadUserInfo() {
+            try {
+                const response = await fetch(`${API_BASE}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('name').value = data.user.name;
+                    document.getElementById('className').value = data.user.class_name;
+                    document.getElementById('studentNo').value = data.user.student_no;
+                }
+            } catch (error) {
+                showAlert('error', '鑾峰彇鐢ㄦ埛淇℃伅澶辫触');
+            }
+        }
+        
+        function handleLeaveTypeChange() {
+            const leaveType = document.getElementById('leaveType').value;
+            const attachmentSection = document.getElementById('attachmentSection');
+            
+            if (leaveType === '鐥呭亣') {
+                attachmentSection.classList.remove('hidden');
+            } else {
+                attachmentSection.classList.add('hidden');
+                uploadedFilePath = null;
+                document.getElementById('filePreview').classList.add('hidden');
+            }
+        }
+        
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                showAlert('error', '鏂囦欢澶у皬涓嶈兘瓒呰繃5MB');
+                return;
+            }
+            
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (!['jpg', 'jpeg', 'png', 'pdf'].includes(ext)) {
+                showAlert('error', '鍙敮鎸乯pg銆乸ng銆乸df鏍煎紡');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload/attachment`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    uploadedFilePath = data.path;
+                    document.getElementById('fileName').textContent = file.name;
+                    document.getElementById('filePreview').classList.remove('hidden');
+                    showAlert('success', '鏂囦欢涓婁紶鎴愬姛');
+                } else {
+                    showAlert('error', data.message);
+                }
+            } catch (error) {
+                showAlert('error', '鏂囦欢涓婁紶澶辫触');
+            }
+        }
+        
+        function removeFile() {
+            uploadedFilePath = null;
+            document.getElementById('fileInput').value = '';
+            document.getElementById('filePreview').classList.add('hidden');
+        }
+        
+        document.getElementById('leaveForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const leaveType = document.getElementById('leaveType').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const reason = document.getElementById('reason').value;
+            
+            if (!leaveType || !startTime || !endTime || !reason) {
+                showAlert('error', '璇峰～鍐欏畬鏁翠俊鎭?);
+                return;
+            }
+            
+            if (leaveType === '鐥呭亣' && !uploadedFilePath) {
+                showAlert('error', '鐥呭亣闇€瑕佷笂浼犵浉鍏宠瘉鏄?);
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '鎻愪氦涓?..';
+            
+            try {
+                const response = await fetch(`${API_BASE}/leave/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        leaveType,
+                        startTime,
+                        endTime,
+                        reason,
+                        attachmentPath: uploadedFilePath
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('success', '璇峰亣鐢宠鎻愪氦鎴愬姛锛?);
+                    document.getElementById('leaveForm').reset();
+                    removeFile();
+                    document.getElementById('attachmentSection').classList.add('hidden');
+                } else {
+                    showAlert('error', data.message);
+                }
+            } catch (error) {
+                showAlert('error', '鎻愪氦澶辫触锛岃閲嶈瘯');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = '鎻愪氦鐢宠';
+        });
+        
+        async function loadRecords() {
+            try {
+                const response = await fetch(`${API_BASE}/leave/my-leaves`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderRecords(data.leaves);
+                }
+            } catch (error) {
+                showAlert('error', '鑾峰彇璁板綍澶辫触');
+            }
+        }
+        
+        function renderRecords(leaves) {
+            const tbody = document.getElementById('recordsTable');
+            const emptyState = document.getElementById('emptyRecords');
+            
+            if (leaves.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            tbody.innerHTML = leaves.map(leave => `
+                <tr>
+                    <td>${formatDateTime(leave.submitted_at)}</td>
+                    <td><span class="leave-type-badge">${leave.leave_type}</span></td>
+                    <td>${formatDateTime(leave.start_time)}</td>
+                    <td>${formatDateTime(leave.end_time)}</td>
+                    <td><span class="status-badge status-${getStatusClass(leave.status)}">${leave.status}</span></td>
+                    <td><button class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;" onclick="showDetail(${leave.id})">鏌ョ湅</button></td>
+                </tr>
+            `).join('');
+        }
+        
+        async function showDetail(id) {
+            try {
+                const response = await fetch(`${API_BASE}/leave/${id}`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const leave = data.leave;
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="detail-row">
+                            <label>瀛︾敓濮撳悕</label>
+                            <p>${leave.student_name} (${leave.student_no})</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>鐝骇</label>
+                            <p>${leave.class_name}</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>璇峰亣绫诲瀷</label>
+                            <p>${leave.leave_type}</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>璇峰亣鏃堕棿</label>
+                            <p>${formatDateTime(leave.start_time)} 鑷?${formatDateTime(leave.end_time)}</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>璇峰亣浜嬬敱</label>
+                            <p>${leave.reason}</p>
+                        </div>
+                        ${leave.attachment_path ? `
+                        <div class="detail-row">
+                            <label>闄勪欢璇佹槑</label>
+                            <p><a href="${API_BASE.replace('/api', '')}${leave.attachment_path}" target="_blank" style="color: #2c5aa0;">鏌ョ湅闄勪欢</a></p>
+                        </div>
+                        ` : ''}
+                        <div class="detail-row">
+                            <label>鐘舵€?/label>
+                            <p><span class="status-badge status-${getStatusClass(leave.status)}">${leave.status}</span></p>
+                        </div>
+                        ${leave.status !== '寰呭鎵? ? `
+                        <div class="detail-row">
+                            <label>瀹℃壒浜?/label>
+                            <p>${leave.approver_name || '-'}</p>
+                        </div>
+                        <div class="detail-row">
+                            <label>瀹℃壒鏃堕棿</label>
+                            <p>${formatDateTime(leave.approved_at)}</p>
+                        </div>
+                        ${leave.teacher_comment ? `
+                        <div class="detail-row">
+                            <label>鏁欏笀澶囨敞</label>
+                            <p>${leave.teacher_comment}</p>
+                        </div>
+                        ` : ''}
+                        ` : ''}
+                    `;
+                    document.getElementById('detailModal').style.display = 'flex';
+                }
+            } catch (error) {
+                showAlert('error', '鑾峰彇璇︽儏澶辫触');
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+        
+        function formatDateTime(dateStr) {
+            if (!dateStr) return '-';
+            const date = new Date(dateStr);
+            return date.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function getStatusClass(status) {
+            const map = {
+                '寰呭鎵?: 'pending',
+                '宸叉壒鍑?: 'approved',
+                '宸叉嫆缁?: 'rejected'
+            };
+            return map[status] || 'pending';
+        }
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const tabName = tab.dataset.tab;
+                document.getElementById('applyTab').classList.toggle('hidden', tabName !== 'apply');
+                document.getElementById('recordsTab').classList.toggle('hidden', tabName !== 'records');
+                
+                if (tabName === 'records') {
+                    loadRecords();
+                }
+                
+                hideAlerts();
+            });
+        });
+        
+        function showAlert(type, message) {
+            hideAlerts();
+            const alert = document.getElementById(type === 'error' ? 'errorMsg' : type === 'warning' ? 'warningMsg' : 'successMsg');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        function hideAlerts() {
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+            document.getElementById('warningMsg').style.display = 'none';
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+        
+        if (checkAuth()) {
+            loadUserInfo();
+        }
+    </script>
+</body>
+</html>
+
